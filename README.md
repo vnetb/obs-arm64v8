@@ -8,11 +8,11 @@ ok.
 https://obsproject.com/forum/threads/obs-raspberry-pi-build-instructions.115739/post-437301
 
 
-`LD_PRELOAD=/usr/lib/arm-linux-gnueabihf/libGL.so MESA_GL_VERSION_OVERRIDE=3.3 obs`
+`MESA_GL_VERSION_OVERRIDE=3.3 obs`
 
 or
 
-`MESA_GL_VERSION_OVERRIDE=3.3 obs`
+`LD_PRELOAD=/usr/lib/arm-linux-gnueabihf/libGL.so MESA_GL_VERSION_OVERRIDE=3.3 obs`
 
 
 ## Sample

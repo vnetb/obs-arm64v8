@@ -2,7 +2,7 @@
 FROM mcr.microsoft.com/dotnet/sdk:5.0-focal-arm64v8 AS builder
 ENV DEBIAN_FRONTEND=noninteractive
 
-ARG OBS_VERSION=27.2.4
+ARG OBS_VERSION=28.0.2
 
 RUN apt-get update && apt-get -y install --no-install-recommends \
       apt-transport-https \

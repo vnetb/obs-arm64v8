@@ -7,7 +7,7 @@ on:
 
 env:
   DEBIAN_FRONTEND: noninteractive
-  OBS_VERSION: 27.2.4
+  OBS_VERSION: 28.0.2
 
 jobs:
   build:
