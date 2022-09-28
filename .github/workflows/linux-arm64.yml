@@ -7,6 +7,7 @@ on:
 
 env:
   DEBIAN_FRONTEND: noninteractive
+  OBS_VERSION: 27.2.4
 
 jobs:
   build:
@@ -27,20 +28,20 @@ jobs:
             -t obs-linux-arm:latest \
             --output=type=docker \
             --platform=linux/arm64 \
+            --build-arg OBS_VERSION \
             ./docker
       - name: Extract build files from Docker instance
         run: |
           docker create -ti --name obs-linux-arm-tmp obs-linux-arm bash
-          docker cp obs-linux-arm-tmp:/build .
-          # docker cp obs-linux-arm-tmp:/scrcpy-server .
-
+          docker cp obs-linux-arm-tmp:/package .
+          # docker cp obs-linux-arm-tmp:/obs-studio/build/obs_${OBS_VERSION}-1_arm64.deb .
+          
       - uses: actions/upload-artifact@v2
         with:
-          name: builds
-          path: build
-          
+          name: packages
+          path: package
+
       # - uses: actions/upload-artifact@v2
       #   with:
-      #     name: servers
-      #     path: scrcpy-server
-          
+      #     name: builds
+      #     path: /obs-studio/build/obs_${OBS_VERSION}-1_arm64.deb 

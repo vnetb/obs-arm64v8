@@ -2,8 +2,7 @@
 FROM mcr.microsoft.com/dotnet/sdk:5.0-focal-arm64v8 AS builder
 ENV DEBIAN_FRONTEND=noninteractive
 
-ARG SCRCPY_VER=1.24
-ARG SERVER_HASH="ae74a81ea79c0dc7250e586627c278c0a9a8c5de46c9fb5c38c167fb1a36f056"
+ARG OBS_VERSION=27.2.4
 
 RUN apt-get update && apt-get -y install --no-install-recommends \
       apt-transport-https \
@@ -57,13 +56,12 @@ RUN apt-get update && apt-get -y install --no-install-recommends \
     && apt-get -y clean \
     && rm -rf /var/lib/apt/lists/*
 
-RUN git clone -b 27.2.4 --recursive https://github.com/obsproject/obs-studio.git
+RUN git clone -b ${OBS_VERSION} --recursive https://github.com/obsproject/obs-studio.git
 RUN mkdir obs-studio/build && \
     cd obs-studio/build && \
     cmake -DENABLE_WAYLAND=OFF -DENABLE_PIPEWIRE=OFF -DBUILD_BROWSER=OFF -DUNIX_STRUCTURE=1 -DCMAKE_INSTALL_PREFIX=/usr .. && \
     make && \
-    checkinstall --install=no --default
+    mkdir /package && \
+    checkinstall --install=no --default --pkgname=obs --pkgversion=${OBS_VERSION} --pakdir=/package
 
-RUN du -a obs-studio/build
-
-
+RUN ls -l /package
